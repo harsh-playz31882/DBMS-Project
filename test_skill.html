@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skill Test</title>
+</head>
+<body>
+    <h1>Skill Creation Test</h1>
+    <form id="skill-form">
+        <input type="text" id="skill-name" placeholder="Skill Name" required><br><br>
+        <input type="text" id="skill-category" placeholder="Category" required><br><br>
+        <select id="skill-demand" required>
+            <option value="">Select Demand Level</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select><br><br>
+        <button type="submit">Save Skill</button>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('skill-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            console.log('Form data:', Object.fromEntries(formData));
+            
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        action: 'create',
+                        entity: 'skills',
+                        'skill-name': formData.get('skill-name'),
+                        'skill-category': formData.get('skill-category'),
+                        'skill-demand': formData.get('skill-demand')
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                const result = await response.json();
+                console.log('Result:', result);
+                
+                document.getElementById('result').innerHTML = JSON.stringify(result, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

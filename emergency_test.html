@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emergency Skill Test</title>
+</head>
+<body>
+    <h1>Emergency Skill Creation Test</h1>
+    
+    <form id="emergency-form">
+        <input type="text" name="skill-name" placeholder="Skill Name" value="React" required><br><br>
+        <input type="text" name="skill-category" placeholder="Category" value="Programming" required><br><br>
+        <input type="text" name="description" placeholder="Description" value="High Demand" required><br><br>
+        <input type="hidden" name="action" value="create">
+        <input type="hidden" name="entity" value="skills">
+        <button type="submit">CREATE SKILL</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('emergency-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData);
+            
+            console.log('Sending:', data.toString());
+            
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: data
+                });
+                
+                const result = await response.json();
+                console.log('Response:', result);
+                document.getElementById('result').innerHTML = `
+                    <h3>Result:</h3>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `<h3>Error: ${error.message}</h3>`;
+            }
+        });
+    </script>
+</body>
+</html>

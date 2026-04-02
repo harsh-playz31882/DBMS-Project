@@ -12,7 +12,8 @@ This system provides a centralized database to manage student profiles, skills, 
 
 - **Database**: SQLite (compatible with DB Browser)
 - **Frontend**: HTML5, CSS3, JavaScript
-- **Backend**: JavaScript (client-side simulation)
+- **Backend**: Python HTTP Server with SQLite integration
+- **API**: RESTful API endpoints for CRUD operations
 
 ## Project Structure
 
@@ -25,6 +26,10 @@ DBMS-Project/
 ├── index.html              # Main frontend application
 ├── styles.css              # Styling and responsive design
 ├── script.js               # JavaScript CRUD operations
+├── crud_interface.html     # CRUD management interface
+├── server.py               # Python HTTP server with API endpoints
+├── start_crud.bat          # Batch file to start the CRUD server
+├── test_api.html           # API testing interface
 └── README.md               # This file
 ```
 
@@ -85,22 +90,32 @@ The database is normalized up to **BCNF (Boyce-Codd Normal Form)**:
 ## Setup Instructions
 
 ### 1. Database Setup
-1. Open **DB Browser for SQLite**
-2. Create a new database: `skill_marketplace.db`
-3. Execute `database_schema.sql` to create tables
-4. Execute `sample_data.sql` to populate with sample data
-5. Use `sql_operations.sql` to test various SQL operations
+1. The Python server automatically creates `skillhub_crud.db` on first run
+2. Alternatively, open **DB Browser for SQLite**
+3. Create a new database: `skillhub_crud.db`
+4. Execute `database_schema.sql` to create tables
+5. Execute `sample_data.sql` to populate with sample data
+6. Use `sql_operations.sql` to test various SQL operations
 
-### 2. Frontend Setup
+### 2. Backend Setup
+1. Make sure Python is installed on your system
+2. Run the Python server: `python server.py`
+3. The server will start on port 8000
+4. Alternatively, use the batch file: `start_crud.bat`
+
+### 3. Frontend Setup
 1. Open `index.html` in a modern web browser
-2. The application will load with sample data
-3. Navigate through different sections using the navigation menu
+2. Open `crud_interface.html` for the CRUD management interface
+3. The application will connect to the Python server
+4. Navigate through different sections using the navigation menu
 
-### 3. Testing the System
+### 4. Testing the System
+- Start the Python server first (`python server.py`)
 - Test CRUD operations on students, clients, and tasks
 - Try search and filter functionality
 - Explore the dashboard statistics
 - View task details and status changes
+- Use `test_api.html` to test API endpoints directly
 
 ## Database Schema Summary
 

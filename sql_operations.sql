@@ -1,17 +1,13 @@
 -- SQL Operations Demonstration
--- Skill-Based Micro-Task Marketplace
 
--- ========================================
 -- 1. SELECT QUERIES
--- ========================================
 
--- Basic SELECT queries
 SELECT * FROM STUDENT;
 SELECT * FROM CLIENT;
 SELECT * FROM SKILL;
 SELECT * FROM TASK;
 
--- SELECT with WHERE conditions
+
 SELECT first_name, last_name, email, university 
 FROM STUDENT 
 WHERE university = 'Stanford University';
@@ -22,16 +18,16 @@ WHERE status = 'open' AND budget > 200;
 
 -- SELECT with ORDER BY
 SELECT first_name, last_name, graduation_year 
-FROM STUDENT 
+FROM STUDENT
 ORDER BY graduation_year ASC, last_name ASC;
 
 SELECT title, budget, posting_date 
 FROM TASK 
 ORDER BY budget DESC;
 
--- ========================================
+
 -- 2. AGGREGATE FUNCTIONS
--- ========================================
+
 
 -- COUNT operations
 SELECT COUNT(*) AS total_students FROM STUDENT;
@@ -59,17 +55,14 @@ WHERE client_rating IS NOT NULL;
 SELECT MAX(budget) AS highest_budget, MIN(budget) AS lowest_budget FROM TASK;
 SELECT MAX(graduation_year) AS latest_graduation FROM STUDENT;
 
--- ========================================
--- 3. GROUP BY and HAVING
--- ========================================
 
--- GROUP BY with multiple columns
+
+-- 3. GROUP BY and HAVING A 
 SELECT university, major, COUNT(*) AS student_count 
 FROM STUDENT 
 GROUP BY university, major 
 ORDER BY student_count DESC;
 
--- GROUP BY with HAVING
 SELECT university, COUNT(*) AS student_count 
 FROM STUDENT 
 GROUP BY university 
@@ -80,9 +73,6 @@ FROM STUDENT_SKILL
 GROUP BY skill_id, proficiency_level 
 HAVING COUNT(*) >= 2;
 
--- ========================================
--- 4. JOIN OPERATIONS
--- ========================================
 
 -- INNER JOIN
 SELECT s.first_name, s.last_name, ss.skill_id, sk.skill_name, ss.proficiency_level
@@ -97,33 +87,8 @@ LEFT JOIN TASK_APPLICATION ta ON s.student_id = ta.student_id
 LEFT JOIN TASK t ON ta.task_id = t.task_id
 WHERE s.student_id = 1;
 
--- JOIN with aggregation
-SELECT s.first_name, s.last_name, COUNT(ta.application_id) AS application_count
-FROM STUDENT s
-LEFT JOIN TASK_APPLICATION ta ON s.student_id = ta.student_id
-GROUP BY s.student_id, s.first_name, s.last_name
-ORDER BY application_count DESC;
 
--- Complex JOIN with multiple tables
-SELECT 
-    t.title AS task_title,
-    c.company_name AS client_name,
-    s.first_name AS student_name,
-    ta.assigned_date,
-    ta.completion_date,
-    p.amount AS payment_amount,
-    r.client_rating
-FROM TASK t
-INNER JOIN CLIENT c ON t.client_id = c.client_id
-INNER JOIN TASK_ASSIGNMENT ta ON t.task_id = ta.task_id
-INNER JOIN STUDENT s ON ta.student_id = s.student_id
-LEFT JOIN PAYMENT p ON ta.assignment_id = p.assignment_id
-LEFT JOIN RATING r ON ta.assignment_id = r.assignment_id;
-
--- ========================================
--- 5. SUBQUERIES
--- ========================================
-
+-- Subqueries
 -- Subquery in WHERE clause
 SELECT first_name, last_name, email
 FROM STUDENT
@@ -146,20 +111,9 @@ SELECT * FROM (
 ) AS student_stats
 WHERE app_count > 1;
 
--- Correlated subquery
-SELECT 
-    task_id,
-    title,
-    budget,
-    (SELECT AVG(budget) FROM TASK) as avg_budget,
-    budget - (SELECT AVG(budget) FROM TASK) as budget_difference
-FROM TASK
-WHERE budget > (SELECT AVG(budget) FROM TASK);
 
--- ========================================
+
 -- 6. NESTED QUERIES
--- ========================================
-
 -- Find students with above average ratings
 SELECT DISTINCT s.first_name, s.last_name, s.email
 FROM STUDENT s
