@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillHub - Student Freelance Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="nav-title">🚀 SkillHub</h1>
+                <p class="nav-subtitle">Student Freelance Marketplace</p>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#tasks" class="nav-link">Browse Tasks</a></li>
+                    <li><a href="#post-task" class="nav-link">Post Task</a></li>
+                    <li><a href="#profile" class="nav-link">My Profile</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section id="home" class="section active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1>Find Your Perfect Gig</h1>
+                    <p>Connect students with real-world opportunities. Earn experience while building your portfolio.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" onclick="showSection('tasks')">Browse Tasks</button>
+                        <button class="btn btn-secondary btn-large" onclick="showSection('post-task')">Post a Task</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Tasks -->
+            <div class="featured-tasks">
+                <h2>🔥 Featured Tasks</h2>
+                <div class="task-grid" id="featured-tasks-grid">
+                    <!-- Tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Popular Skills -->
+            <div class="popular-skills">
+                <h2>🎯 In-Demand Skills</h2>
+                <div class="skills-showcase" id="popular-skills-showcase">
+                    <!-- Skills will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="statistics-section">
+                <h2>📊 Marketplace Statistics</h2>
+                <div class="stats-horizontal">
+                    <div class="stat-box">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-content">
+                            <span class="stat-number" id="total-tasks">8</span>
+                            <span class="stat-label">Active Tasks</span>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-icon">👨‍🎓</div>
+                        <div class="stat-content">
+                            <span class="stat-number" id="total-students">8</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-icon">🏢</div>
+                        <div class="stat-content">
+                            <span class="stat-number" id="total-clients">8</span>
+                            <span class="stat-label">Clients</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse Tasks Section -->
+        <section id="tasks" class="section">
+            <div class="tasks-header">
+                <div>
+                    <h2>📋 Browse Tasks</h2>
+                    <p>Find opportunities that match your skills</p>
+                </div>
+                <div class="tasks-filters">
+                    <select id="skill-filter" onchange="filterTasks()">
+                        <option value="">All Skills</option>
+                    </select>
+                    <select id="budget-filter" onchange="filterTasks()">
+                        <option value="">All Budgets</option>
+                        <option value="0-50">$0 - $50</option>
+                        <option value="50-150">$50 - $150</option>
+                        <option value="150-300">$150 - $300</option>
+                        <option value="300+">$300+</option>
+                    </select>
+                    <input type="text" id="task-search" placeholder="Search tasks..." onkeyup="filterTasks()">
+                </div>
+            </div>
+            <div class="task-grid" id="tasks-grid">
+                <!-- Tasks will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Post Task Section -->
+        <section id="post-task" class="section">
+            <div class="post-task-container">
+                <h2>📝 Post a New Task</h2>
+                <p>Get help from talented students for your project</p>
+                <form id="post-task-form" class="task-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-title">Task Title *</label>
+                            <input type="text" id="task-title" name="title" required placeholder="e.g., Build a responsive website">
+                        </div>
+                        <div class="form-group">
+                            <label for="task-budget">Budget ($) *</label>
+                            <input type="number" id="task-budget" name="budget" required placeholder="e.g., 150" min="5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-description">Description *</label>
+                        <textarea id="task-description" name="description" rows="4" required placeholder="Describe what needs to be done..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-skill">Required Skill *</label>
+                            <input type="text" id="task-skill" name="skill" required placeholder="e.g., JavaScript, Python, C++, Unreal Engine">
+                            <small class="form-hint">Popular skills: JavaScript, Python, C++, Unreal Engine, Graphic Design, Content Writing</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-deadline">Deadline *</label>
+                            <input type="date" id="task-deadline" name="deadline" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-difficulty">Difficulty Level</label>
+                        <select id="task-difficulty" name="difficulty">
+                            <option value="Beginner">Beginner - Great for learning</option>
+                            <option value="Intermediate">Intermediate - Some experience needed</option>
+                            <option value="Advanced">Advanced - Expert level</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-hours">Estimated Hours</label>
+                        <input type="number" id="task-hours" name="hours" placeholder="e.g., 10" min="1">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-large">Post Task</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetTaskForm()">Clear</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="section">
+            <div class="profile-container">
+                <h2>👤 My Profile</h2>
+                <div class="profile-content">
+                    <div class="profile-sidebar">
+                        <div class="profile-avatar">
+                            <div class="avatar-placeholder">👤</div>
+                            <h3>John Doe</h3>
+                            <p>Computer Science Student</p>
+                            <div class="profile-stats">
+                                <div class="profile-stat">
+                                    <span>5</span>
+                                    <span>Tasks Completed</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span>4.8</span>
+                                    <span>Avg Rating</span>
+                                </div>
+                                <div class="profile-stat">
+                                    <span>$750</span>
+                                    <span>Total Earned</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-main">
+                        <div class="profile-section">
+                            <h3>🎯 My Skills</h3>
+                            <div class="profile-skills" id="profile-skills">
+                                <!-- Skills will be populated by JavaScript -->
+                            </div>
+                            <button class="btn btn-primary" onclick="showAddSkillForm()">Add Skill</button>
+                        </div>
+                        <div class="profile-section">
+                            <h3>📋 My Applications</h3>
+                            <div class="applications-list" id="my-applications">
+                                <!-- Applications will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="profile-section">
+                            <h3>⭐ My Reviews</h3>
+                            <div class="reviews-list" id="my-reviews">
+                                <!-- Reviews will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Section -->
+        <section id="payment" class="section">
+            <div class="payment-container">
+                <h2>💳 Complete Payment</h2>
+                <div class="payment-details">
+                    <div class="payment-summary">
+                        <h3>Payment Summary</h3>
+                        <div class="payment-item">
+                            <span>Task:</span>
+                            <span id="payment-task-title">JavaScript Web App Development</span>
+                        </div>
+                        <div class="payment-item">
+                            <span>Amount:</span>
+                            <span class="payment-amount" id="payment-amount">$300.00</span>
+                        </div>
+                        <div class="payment-item">
+                            <span>Service Fee:</span>
+                            <span id="payment-fee">$15.00 (5%)</span>
+                        </div>
+                        <div class="payment-total">
+                            <span>Total:</span>
+                            <span class="payment-total-amount" id="payment-total">$315.00</span>
+                        </div>
+                    </div>
+                </div>
+                <form id="payment-form" class="payment-form">
+                    <div class="form-group">
+                        <label for="payment-method">Payment Method *</label>
+                        <select id="payment-method" name="paymentMethod" required>
+                            <option value="">Select payment method</option>
+                            <option value="credit_card">💳 Credit Card</option>
+                            <option value="debit_card">💳 Debit Card</option>
+                            <option value="paypal">💰 PayPal</option>
+                            <option value="bank_transfer">🏦 Bank Transfer</option>
+                            <option value="stripe">💳 Stripe (Recommended)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Credit Card Fields -->
+                    <div id="credit-card-fields" class="payment-fields">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-number">Card Number *</label>
+                                <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                            </div>
+                            <div class="form-group">
+                                <label for="card-name">Cardholder Name *</label>
+                                <input type="text" id="card-name" name="cardName" placeholder="John Doe">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="card-expiry">Expiry Date *</label>
+                                <input type="text" id="card-expiry" name="cardExpiry" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="card-cvv">CVV *</label>
+                                <input type="text" id="card-cvv" name="cardCvv" placeholder="123" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PayPal Fields -->
+                    <div id="paypal-fields" class="payment-fields" style="display: none;">
+                        <div class="payment-info">
+                            <p>You will be redirected to PayPal to complete your payment.</p>
+                            <button type="button" class="btn btn-primary btn-large" onclick="processPayPalPayment()">
+                                Continue with PayPal
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-large">Complete Payment</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelPayment()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modal-title">Modal Title</h2>
+            </div>
+            <div id="modal-body" class="modal-body">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
